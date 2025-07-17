@@ -10,12 +10,13 @@ jobs:
           name: Show current directory
           command: pwd
       - run:
-          name: List files recursively
+          name: List all files recursively
           command: ls -R
       - run:
           name: List app and test files
           command: |
-            ls -l app.py todo_logic.py test_todo.py || echo "Files missing"
+            ls -l app.py todo_logic.py || echo "App files missing"
+            ls -l tests/ || echo "Tests folder missing"
       - run:
           name: Check Python version
           command: python --version
@@ -26,8 +27,11 @@ jobs:
             pip install pytest
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - run:
+          name: List files in tests folder
+          command: ls -l tests/
+      - run:
           name: Run tests
-          command: python -m pytest test_todo.py
+          command: python -m pytest tests/
 
 workflows:
   test-workflow:
